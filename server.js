@@ -1,4 +1,5 @@
-require('dotenv').config(); // Load environment variables from .env file
+const dotenv = require('dotenv').config(); // Load environment variables from .env file
+const mongoose = require('mongoose')
 const app = require('./app');
 const connectDB = require('./utils/db');
 

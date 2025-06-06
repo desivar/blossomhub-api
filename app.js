@@ -1,11 +1,8 @@
-const express = require('express');
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./utils/swagger');
-const errorHandler = require('./middleware/errorHandler');
-
-// Only import the routes you are actively using
-const flowerRoutes = require('./routes/flowerRoutes');
-const categoryRoutes = require('./routes/categoryRoutes');
+const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./utils/swagger");
+const errorHandler = require("./middleware/errorHandler");
+const routes = require("./routes/index");
 
 // You should no longer have imports for:
 // const authRoutes = require('./routes/authRoutes');
@@ -24,8 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API Routes - Only mount the ones you want active
-app.use('/api/flowers', flowerRoutes);
-app.use('/api/categories', categoryRoutes);
+app.use("/api", routes);
 
 // You should no longer have mountings for:
 // app.use('/api/auth', authRoutes);
@@ -34,11 +30,11 @@ app.use('/api/categories', categoryRoutes);
 // app.use('/api/orders', orderRoutes);
 
 // Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Health check endpoint
-app.get('/', (req, res) => {
-    res.send('BlossomHub API is running!');
+app.get("/", (req, res) => {
+  res.send("BlossomHub API is running!");
 });
 
 // Centralized error handling middleware (always keep this last)
