@@ -95,7 +95,8 @@ const options = {
             }
         }
     },
-    apis: ['./routes/*.js', './models/*.js'], // Path to the API docs (routes and models)
+    
+    apis: ['./routes/flowerRoutes.js', './routes/categoryRoutes.js', './models/*.js'],
 };
 
 const swaggerSpec = swaggerJsdoc(options);

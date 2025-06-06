@@ -1,34 +1,37 @@
 const express = require('express');
-const passport = require('passport');
 const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./utils/swagger'); // Import Swagger configuration
+const swaggerSpec = require('./utils/swagger');
 const errorHandler = require('./middleware/errorHandler');
 
-// Import routes
-const authRoutes = require('./routes/authRoutes');
+// Only import the routes you are actively using
 const flowerRoutes = require('./routes/flowerRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
-const userRoutes = require('./routes/userRoutes');
-const wishlistRoutes = require('./routes/wishlistRoutes');
-const orderRoutes = require('./routes/orderRoutes');
+
+// You should no longer have imports for:
+// const authRoutes = require('./routes/authRoutes');
+// const userRoutes = require('./routes/userRoutes');
+// const wishlistRoutes = require('./routes/wishlistRoutes');
+// const orderRoutes = require('./routes/orderRoutes');
 
 const app = express();
 
-// Passport config (ensure this runs before any route that uses passport)
-require('./config/passport')(passport);
+// No Passport config or initialization here now
+// require('./config/passport')(passport);
+// app.use(passport.initialize());
 
-// Middleware
-app.use(express.json()); // Body parser for JSON
-app.use(express.urlencoded({ extended: true })); // Body parser for URL-encoded data
-app.use(passport.initialize()); // Initialize Passport
+// Middleware for parsing JSON request bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// API Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/flowers', flowerRoutes); // Changed to /api/flowers for consistency
-app.use('/api/categories', categoryRoutes); // Changed to /api/categories
-app.use('/api/users', userRoutes); // Changed to /api/users
-app.use('/api/wishlist', wishlistRoutes);
-app.use('/api/orders', orderRoutes);
+// API Routes - Only mount the ones you want active
+app.use('/api/flowers', flowerRoutes);
+app.use('/api/categories', categoryRoutes);
+
+// You should no longer have mountings for:
+// app.use('/api/auth', authRoutes);
+// app.use('/api/users', userRoutes);
+// app.use('/api/wishlist', wishlistRoutes);
+// app.use('/api/orders', orderRoutes);
 
 // Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -38,7 +41,7 @@ app.get('/', (req, res) => {
     res.send('BlossomHub API is running!');
 });
 
-// Centralized error handling middleware (should be last)
+// Centralized error handling middleware (always keep this last)
 app.use(errorHandler);
 
 module.exports = app;
