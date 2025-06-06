@@ -83,4 +83,20 @@ router.get('/', getFlowers);
  *         content:
  *           application/json:
  *             schema:
- *               type: objec*
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   $ref: '#/components/schemas/Flower'
+ *       404:
+ *         description: Flower not found
+ *       500:
+ *         description: Server error
+ */
+router.get('/:id', getFlowerById);
+
+module.exports = router;
+
+
