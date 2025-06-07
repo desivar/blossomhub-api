@@ -1,14 +1,19 @@
-const dotenv = require('dotenv').config(); // Load environment variables from .env file
-const mongoose = require('mongoose')
-const app = require('./app');
-const connectDB = require('./utils/db');
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-const PORT = process.env.PORT || 5500; // Use port from .env or default to 5000
+const PORT = process.env.PORT || 5500; // Use port from .env or default to 5500
 
-// Connect to MongoDB
-connectDB();
+// Connect to MongoDB directly in server.js
+mongoose.connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log("✅ MongoDB Connected"))
+  .catch(err => {
+      console.error("❌ MongoDB Connection Error:", err);
+      process.exit(1);
+  });
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
 });
