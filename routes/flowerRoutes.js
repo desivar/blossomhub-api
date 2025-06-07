@@ -1,6 +1,19 @@
-const express = require('express');
-const { getFlowers, getFlowerById, createFlower, updateFlowerById, deleteFlowerById } = require('../controllers/flowerController');
+const express = require("express");
+const {
+  getFlowers,
+  getFlowerById,
+  createFlower,
+  updateFlowerById,
+  deleteFlowerById,
+} = require("../controllers/flowerController");
 const router = express.Router();
+const { validateData } = require("../middleware/validateData");
+const {
+  createFlowerSchema,
+} = require("../validators/flowers/createFlowerSchema");
+const {
+  updateFlowerSchema,
+} = require("../validators/flowers/updateFlowerSchema");
 
 /**
  * @swagger
@@ -62,7 +75,7 @@ const router = express.Router();
  *       500:
  *         description: Server error
  */
-router.get('/', getFlowers);
+router.get("/", getFlowers);
 
 /**
  * @swagger
@@ -95,8 +108,7 @@ router.get('/', getFlowers);
  *       500:
  *         description: Server error
  */
-router.get('/:id', getFlowerById);
-
+router.get("/:id", getFlowerById);
 
 /**
  * @swagger
@@ -175,7 +187,7 @@ router.get('/:id', getFlowerById);
  *       500:
  *         description: Internal server error
  */
-router.post("/", createFlower);
+router.post("/", validateData(createFlowerSchema), createFlower);
 
 /**
  * @swagger
@@ -255,8 +267,7 @@ router.post("/", createFlower);
  *       500:
  *         description: Internal server error
  */
-router.put("/:id", updateFlowerById);
-
+router.put("/:id", validateData(updateFlowerSchema), updateFlowerById);
 
 /**
  * @swagger
@@ -290,7 +301,7 @@ router.put("/:id", updateFlowerById);
  *       500:
  *         description: Internal server error
  */
-router.delete("/:id", deleteFlowerById)
+router.delete("/:id", deleteFlowerById);
 
 module.exports = router;
 

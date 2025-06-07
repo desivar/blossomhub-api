@@ -68,7 +68,7 @@ const getFlowerById = async (req, res, next) => {
 
 /**
  * @desc    Create a new flower
- * @route   POST /flower
+ * @route   POST /flowers
  * @access  Public
  */
 const createFlower = async (req, res, next) => {
@@ -102,26 +102,32 @@ const createFlower = async (req, res, next) => {
 
 /**
  * @desc    Update a flower by ID
- * @route   PUT /flower/:id
+ * @route   PUT /flowers/:id
  * @access  Public
  */
 const updateFlowerById = async (req, res, next) => {
   const flowerId = req.params.id;
   const body = req.body;
+  console.log("===>",flowerId)
 
   try {
+    const flower = await Flower.findById(flowerId);
+    if (!flower) {
+      const error = new Error(`Flower not found with ID of ${flowerId}`);
+      error.statusCode = 404;
+      return next(error);
+    }
+  
     const updateFlower = await Flower.findByIdAndUpdate(flowerId, body, {
       new: true,
     });
+    console.log("====>",updateFlower);
 
-    res.json(updateFlower)
-
+    res.json(updateFlower);
   } catch (error) {
     next(error);
   }
 };
-
-
 
 /**
  * @desc    Delete a flower by ID
