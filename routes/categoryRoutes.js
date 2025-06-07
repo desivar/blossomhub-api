@@ -6,7 +6,6 @@ const {
   updateCategoryById,
   deleteCategoryById,
 } = require("../controllers/categoryController");
-const { validateData } = require("../middleware/validateData");
 const {
   createCategorySchema,
 } = require("../validators/categories/createCategorySchema");

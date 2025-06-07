@@ -7,7 +7,7 @@ const {
   deleteFlowerById,
 } = require("../controllers/flowerController");
 const router = express.Router();
-const { validateData } = require("../middleware/validateData");
+
 const {
   createFlowerSchema,
 } = require("../validators/flowers/createFlowerSchema");
