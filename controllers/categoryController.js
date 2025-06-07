@@ -4,7 +4,7 @@ const Category = require("../models/Category");
 
 /**
  * @desc    Get all categories
- * @route   GET /api/categories
+ * @route   GET /categories
  * @access  Public
  */
 const getCategories = async (req, res, next) => {
@@ -24,7 +24,7 @@ const getCategories = async (req, res, next) => {
 
 /**
  * @desc    Get single category by ID
- * @route   GET /api/categories/:id
+ * @route   GET /categories/:id
  * @access  Public
  */
 const getCategoryById = async (req, res, next) => {
@@ -52,7 +52,7 @@ const getCategoryById = async (req, res, next) => {
 
 /**
  * @desc    Create a new category
- * @route   POST /api/categories
+ * @route   POST /categories
  * @access  Public
  */
 const createCategory = async (req, res, next) => {
@@ -65,7 +65,7 @@ const createCategory = async (req, res, next) => {
     }).save();
 
     res.json(newCategory);
-    
+
   } catch (error) {
     next(error);
   }
@@ -75,7 +75,7 @@ const createCategory = async (req, res, next) => {
 
 /**
  * @desc    Update a category by ID
- * @route   PUT /api/categories/:id
+ * @route   PUT /categories/:id
  * @access  Public
  */
 const updateCategoryById = async (req, res, next) => {
@@ -97,7 +97,7 @@ const updateCategoryById = async (req, res, next) => {
 
 /**
  * @desc    Delete a category by ID
- * @route   DELETE /api/categories/:id
+ * @route   DELETE /categories/:id
  * @access  Public
  */
 const deleteCategoryById = async (req, res, next) => {
@@ -106,6 +106,7 @@ const deleteCategoryById = async (req, res, next) => {
   try {
     const deleteCategory = await Category.deleteOne({ _id: categoryId });
     res.json(deleteCategory)
+    
   } catch (error) {
     next(error);
   }

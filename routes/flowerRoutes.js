@@ -1,5 +1,5 @@
 const express = require('express');
-const { getFlowers, getFlowerById, createFlower } = require('../controllers/flowerController');
+const { getFlowers, getFlowerById, createFlower, deleteFlowerById } = require('../controllers/flowerController');
 const router = express.Router();
 
 /**
@@ -176,6 +176,40 @@ router.get('/:id', getFlowerById);
  *         description: Internal server error
  */
 router.post("/", createFlower);
+
+/**
+ * @swagger
+ * /flowers/{id}:
+ *   delete:
+ *     summary: Delete a flower by ID
+ *     tags: [Flowers]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the flower to delete
+ *     responses:
+ *       200:
+ *         description: Flower deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 acknowledged:
+ *                   type: boolean
+ *                   example: true
+ *                 deletedCount:
+ *                   type: integer
+ *                   example: 1
+ *       404:
+ *         description: Flower not found
+ *       500:
+ *         description: Internal server error
+ */
+router.delete("/:id", deleteFlowerById)
 
 module.exports = router;
 

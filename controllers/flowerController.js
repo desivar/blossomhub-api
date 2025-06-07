@@ -4,7 +4,7 @@ const Category = require("../models/Category");
 
 /**
  * @desc    Get all flowers
- * @route   GET /api/flowers
+ * @route   GET /flowers
  * @access  Public
  * @param   {object} req.query - Optional query parameters for filtering (category, search, minPrice, maxPrice, isFeatured)
  */
@@ -44,7 +44,7 @@ const getFlowers = async (req, res, next) => {
 
 /**
  * @desc    Get single flower by ID
- * @route   GET /api/flowers/:id
+ * @route   GET /flowers/:id
  * @access  Public
  */
 const getFlowerById = async (req, res, next) => {
@@ -69,7 +69,7 @@ const getFlowerById = async (req, res, next) => {
 
 /**
  * @desc    Create a new flower
- * @route   POST /api/flower
+ * @route   POST /flower
  * @access  Public
  */
 const createFlower = async (req, res, next) => {
@@ -102,8 +102,26 @@ const createFlower = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Delete a flower by ID
+ * @route   DELETE /flowers/:id
+ * @access  Public
+ */
+const deleteFlowerById = async (req, res, next) => {
+  const flowerId = req.params.id;
+
+  try {
+    const deleteFlower = await Flower.deleteOne({_id:flowerId});
+    res.json(deleteFlower)
+
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   getFlowers,
   getFlowerById,
   createFlower,
+  deleteFlowerById
 };
