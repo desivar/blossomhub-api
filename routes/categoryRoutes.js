@@ -6,12 +6,7 @@ const {
   updateCategoryById,
   deleteCategoryById,
 } = require("../controllers/categoryController");
-const {
-  createCategorySchema,
-} = require("../validators/categories/createCategorySchema");
-const {
-  updateCategorySchema,
-} = require("../validators/categories/updateCategorySchema");
+
 const router = express.Router();
 
 /**
@@ -120,16 +115,13 @@ router.get("/:id", getCategoryById);
  *                   type: string
  *                 description:
  *                   type: string
- *                 createAt:
+ *                 createdAt:
  *                   type: string
  *                   format: date-time
- *       400:
- *         description: Validation error
  *       500:
  *         description: Internal server error
  */
-router.post("/", validateData(createCategorySchema), createCategory);
-
+router.post("/", createCategory);
 
 /**
  * @swagger
@@ -157,10 +149,6 @@ router.post("/", validateData(createCategorySchema), createCategory);
  *               description:
  *                 type: string
  *                 example: Updated category description
- *               createAt:
- *                 type: string
- *                 format: date-time
- *                 example: 2025-06-06T14:30:00.000Z
  *     responses:
  *       200:
  *         description: Category updated successfully
@@ -175,17 +163,13 @@ router.post("/", validateData(createCategorySchema), createCategory);
  *                   type: string
  *                 description:
  *                   type: string
- *                 createAt:
+ *                 updatedAt:
  *                   type: string
  *                   format: date-time
- *       404:
- *         description: Category not found
  *       500:
  *         description: Internal server error
  */
-router.put("/:id", validateData(updateCategorySchema), updateCategoryById);
-
-
+router.put("/:id", updateCategoryById);
 
 /**
  * @swagger
@@ -214,11 +198,9 @@ router.put("/:id", validateData(updateCategorySchema), updateCategoryById);
  *                 deletedCount:
  *                   type: integer
  *                   example: 1
- *       404:
- *         description: Category not found
  *       500:
  *         description: Internal server error
  */
-router.delete("/:id", deleteCategoryById)
+router.delete("/:id", deleteCategoryById);
 
 module.exports = router;
