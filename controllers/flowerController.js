@@ -1,7 +1,6 @@
 const Flower = require("../models/Flower");
 const Category = require("../models/Category");
 
-
 /**
  * @desc    Get all flowers
  * @route   GET /flowers
@@ -92,15 +91,37 @@ const createFlower = async (req, res, next) => {
       category,
       imageUrl: body.imageUrl,
       stock: body.stock,
-      isFeatured: body.isFeatured
+      isFeatured: body.isFeatured,
     }).save();
 
     res.json(newFlower);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Update a flower by ID
+ * @route   PUT /flower/:id
+ * @access  Public
+ */
+const updateFlowerById = async (req, res, next) => {
+  const flowerId = req.params.id;
+  const body = req.body;
+
+  try {
+    const updateFlower = await Flower.findByIdAndUpdate(flowerId, body, {
+      new: true,
+    });
+
+    res.json(updateFlower)
 
   } catch (error) {
     next(error);
   }
 };
+
+
 
 /**
  * @desc    Delete a flower by ID
@@ -111,17 +132,17 @@ const deleteFlowerById = async (req, res, next) => {
   const flowerId = req.params.id;
 
   try {
-    const deleteFlower = await Flower.deleteOne({_id:flowerId});
-    res.json(deleteFlower)
-
+    const deleteFlower = await Flower.deleteOne({ _id: flowerId });
+    res.json(deleteFlower);
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
 module.exports = {
   getFlowers,
   getFlowerById,
   createFlower,
-  deleteFlowerById
+  updateFlowerById,
+  deleteFlowerById,
 };

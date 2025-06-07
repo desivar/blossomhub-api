@@ -88,6 +88,7 @@ const updateCategoryById = async (req, res, next) => {
     });
 
     res.json(updateCategory);
+    
   } catch (error) {
     next(error);
   }
@@ -106,7 +107,7 @@ const deleteCategoryById = async (req, res, next) => {
   try {
     const deleteCategory = await Category.deleteOne({ _id: categoryId });
     res.json(deleteCategory)
-    
+
   } catch (error) {
     next(error);
   }

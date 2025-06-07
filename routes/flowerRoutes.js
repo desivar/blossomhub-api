@@ -1,5 +1,5 @@
 const express = require('express');
-const { getFlowers, getFlowerById, createFlower, deleteFlowerById } = require('../controllers/flowerController');
+const { getFlowers, getFlowerById, createFlower, updateFlowerById, deleteFlowerById } = require('../controllers/flowerController');
 const router = express.Router();
 
 /**
@@ -176,6 +176,87 @@ router.get('/:id', getFlowerById);
  *         description: Internal server error
  */
 router.post("/", createFlower);
+
+/**
+ * @swagger
+ * /flowers/{id}:
+ *   put:
+ *     summary: Update a flower by ID
+ *     tags: [Flowers]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: MongoDB ObjectId of the flower to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Rose
+ *               description:
+ *                 type: string
+ *                 example: Updated description for rose
+ *               price:
+ *                 type: number
+ *                 example: 15.99
+ *               categoryId:
+ *                 type: string
+ *                 example: 665fcd123abc4567def890ab
+ *               imageUrl:
+ *                 type: string
+ *                 example: https://example.com/images/rose.jpg
+ *               stock:
+ *                 type: integer
+ *                 example: 50
+ *               isFeatured:
+ *                 type: boolean
+ *                 example: true
+ *     responses:
+ *       200:
+ *         description: Flower updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *                 price:
+ *                   type: number
+ *                 category:
+ *                   type: string
+ *                 imageUrl:
+ *                   type: string
+ *                 stock:
+ *                   type: integer
+ *                 isFeatured:
+ *                   type: boolean
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Flower not found
+ *       500:
+ *         description: Internal server error
+ */
+router.put("/:id", updateFlowerById);
+
 
 /**
  * @swagger
