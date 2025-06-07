@@ -6,14 +6,8 @@ const {
   updateFlowerById,
   deleteFlowerById,
 } = require("../controllers/flowerController");
-const router = express.Router();
 
-const {
-  createFlowerSchema,
-} = require("../validators/flowers/createFlowerSchema");
-const {
-  updateFlowerSchema,
-} = require("../validators/flowers/updateFlowerSchema");
+const router = express.Router();
 
 /**
  * @swagger
@@ -28,32 +22,6 @@ const {
  *   get:
  *     summary: Get all flowers
  *     tags: [Flowers]
- *     parameters:
- *       - in: query
- *         name: category
- *         schema:
- *           type: string
- *         description: Filter by category ID
- *       - in: query
- *         name: search
- *         schema:
- *           type: string
- *         description: Search by flower name (case-insensitive)
- *       - in: query
- *         name: minPrice
- *         schema:
- *           type: number
- *         description: Filter by minimum price
- *       - in: query
- *         name: maxPrice
- *         schema:
- *           type: number
- *         description: Filter by maximum price
- *       - in: query
- *         name: isFeatured
- *         schema:
- *           type: boolean
- *         description: Filter by featured status (true/false)
  *     responses:
  *       200:
  *         description: A list of flowers.
@@ -182,12 +150,10 @@ router.get("/:id", getFlowerById);
  *                 updatedAt:
  *                   type: string
  *                   format: date-time
- *       400:
- *         description: Validation error
  *       500:
  *         description: Internal server error
  */
-router.post("/", validateData(createFlowerSchema), createFlower);
+router.post("/", createFlower);
 
 /**
  * @swagger
@@ -260,14 +226,10 @@ router.post("/", validateData(createFlowerSchema), createFlower);
  *                 updatedAt:
  *                   type: string
  *                   format: date-time
- *       400:
- *         description: Validation error
- *       404:
- *         description: Flower not found
  *       500:
  *         description: Internal server error
  */
-router.put("/:id", validateData(updateFlowerSchema), updateFlowerById);
+router.put("/:id", updateFlowerById);
 
 /**
  * @swagger
@@ -296,13 +258,9 @@ router.put("/:id", validateData(updateFlowerSchema), updateFlowerById);
  *                 deletedCount:
  *                   type: integer
  *                   example: 1
- *       404:
- *         description: Flower not found
  *       500:
  *         description: Internal server error
  */
 router.delete("/:id", deleteFlowerById);
 
 module.exports = router;
-
-
