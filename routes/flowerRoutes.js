@@ -1,5 +1,5 @@
 const express = require('express');
-const { getFlowers, getFlowerById } = require('../controllers/flowerController');
+const { getFlowers, getFlowerById, createFlower } = require('../controllers/flowerController');
 const router = express.Router();
 
 /**
@@ -96,6 +96,86 @@ router.get('/', getFlowers);
  *         description: Server error
  */
 router.get('/:id', getFlowerById);
+
+
+/**
+ * @swagger
+ * /flowers:
+ *   post:
+ *     summary: Create a new flower
+ *     tags: [Flowers]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - price
+ *               - categoryId
+ *               - stock
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Tulip
+ *               description:
+ *                 type: string
+ *                 example: Bright and cheerful spring flower
+ *               price:
+ *                 type: number
+ *                 example: 12.99
+ *               categoryId:
+ *                 type: string
+ *                 description: MongoDB ObjectId of the category
+ *                 example: 665fcd123abc4567def890ab
+ *               imageUrl:
+ *                 type: string
+ *                 example: https://example.com/images/tulip.jpg
+ *               stock:
+ *                 type: integer
+ *                 example: 20
+ *               isFeatured:
+ *                 type: boolean
+ *                 example: true
+ *     responses:
+ *       201:
+ *         description: Flower created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   example: 666abc123def456ghi789jkl
+ *                 name:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *                 price:
+ *                   type: number
+ *                 category:
+ *                   type: string
+ *                   description: Populated category ID
+ *                 imageUrl:
+ *                   type: string
+ *                 stock:
+ *                   type: integer
+ *                 isFeatured:
+ *                   type: boolean
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *       400:
+ *         description: Validation error
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/", createFlower);
 
 module.exports = router;
 

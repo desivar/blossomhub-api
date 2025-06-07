@@ -65,6 +65,7 @@ const createCategory = async (req, res, next) => {
     }).save();
 
     res.json(newCategory);
+    
   } catch (error) {
     next(error);
   }
