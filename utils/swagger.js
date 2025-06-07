@@ -19,14 +19,6 @@ const options = {
             }
         ],
         components: {
-            securitySchemes: {
-                BearerAuth: {
-                    type: 'http',
-                    scheme: 'bearer',
-                    bearerFormat: 'JWT',
-                    description: 'Enter your JWT token here to access protected routes.',
-                },
-            },
             schemas: {
                 Flower: {
                     type: 'object',
