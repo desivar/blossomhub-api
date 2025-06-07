@@ -21,7 +21,9 @@ Order Processing: Planned
 Handle order creation, status updates, and order history.
 Robust Error Handling: Centralized error handling for consistent API responses.
 API Documentation: Interactive API documentation using Swagger UI.
+
 🚀 Technologies Used
+
 Node.js: JavaScript runtime.
 Express.js: Web application framework for Node.js.
 MongoDB: NoSQL database for flexible data storage.
@@ -29,7 +31,9 @@ Mongoose: MongoDB object data modeling (ODM) for Node.js.
 Dotenv: Loads environment variables from a .env file.
 Swagger (swagger-jsdoc & swagger-ui-express): For generating and serving API documentation.
 Nodemon: (For development) Automatically restarts the server on file changes.
+
 ⚡ Getting Started
+
 Follow these steps to get the BlossomHub API up and running on your local machine.
 
 Prerequisites
