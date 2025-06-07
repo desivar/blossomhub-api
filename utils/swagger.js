@@ -10,9 +10,13 @@ const options = {
         },
         servers: [
             {
-                url: `http://localhost:${process.env.PORT || 5000}/api`,
+                url: `http://localhost:${process.env.PORT || 5500}/api`,
                 description: 'Development server',
             },
+            {
+                url: 'https://blossomhub-api.onrender.com/api',
+                description: 'Production server (Render)',
+            }
         ],
         components: {
             securitySchemes: {
@@ -95,7 +99,6 @@ const options = {
             }
         }
     },
-    
     apis: ['./routes/flowerRoutes.js', './routes/categoryRoutes.js', './models/*.js'],
 };
 
