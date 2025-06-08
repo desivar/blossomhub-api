@@ -1,19 +1,27 @@
-const mongoose = require("mongoose");
-require("dotenv").config();
+const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./utils/swagger");
+const errorHandler = require("./middleware/errorHandler");
+const routes = require("./routes/index");
 
-const PORT = process.env.PORT || 5500; // Use port from .env or default to 5500
+const app = express();
 
-// Connect to MongoDB directly in server.js
-mongoose.connect(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => {
-      console.error("❌ MongoDB Connection Error:", err);
-      process.exit(1);
-  });
+// Middleware for parsing JSON request bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+// API Routes
+app.use("/api", routes);
+
+// Swagger UI
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Health check endpoint
+app.get("/", (req, res) => {
+  res.send("BlossomHub API is running!");
 });
+
+// Centralized error handling middleware
+app.use(errorHandler);
+
+module.exports = app;
